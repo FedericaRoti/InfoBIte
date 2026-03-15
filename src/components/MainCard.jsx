@@ -6,7 +6,7 @@ export default function MainCard({ article }) {
       href={article.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="col-span-2 flex flex-col gap-3 p-8 bg-[#0a1628] text-white hover:bg-[#111d35] transition-colors group"
+      className="col-span-1 md:col-span-2 flex flex-col gap-3 p-8 bg-[#0a1628] text-white hover:bg-[#111d35] transition-colors group"
     >
       <div className="flex items-center gap-2">
         <div className="w-1.25 h-1.25 rounded-full bg-[#ff4d1c] shrink-0"></div>

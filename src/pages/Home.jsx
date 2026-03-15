@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div className="bg-[#f5f2eb] min-h-screen">
       <Navbar />
-      <header className="pt-14">
+      <header>
 
         {/* Hero Banner */}
         <section
@@ -93,8 +93,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Ticker — più alto */}
-        <section className="bg-[#ff4d1c] py-4 overflow-hidden">
+        {/* Ticker */}
+        <section className="bg-[#ff4d1c] py-12 overflow-hidden">
           <div className="flex gap-12 w-max animate-ticker">
             {[...Array(2)].map((_, rep) =>
               ['Artificial Intelligence', 'Web Development', 'Open Source', 'Startup', 'Cloud & DevOps', 'JavaScript', 'Machine Learning', 'Security'].map((item, i) => (
@@ -140,7 +140,7 @@ export default function Home() {
                 <span className="font-mono text-[0.68rem] text-[#999]">{articles.length} articoli · 09:00</span>
               </div>
 
-              <div className="grid grid-cols-3 gap-px bg-[#ddd9cf] mb-12 fade-up opacity-0 translate-y-4 transition-all duration-500">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#ddd9cf] mb-12 fade-up opacity-0 translate-y-4 transition-all duration-500">
                 <MainCard article={mainArticle} />
                 {restArticles.map((article, i) => (
                   <Card key={i} article={article} />

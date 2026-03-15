@@ -1,16 +1,67 @@
-# React + Vite
+# 📰 InfoBite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Digest automatico di notizie tech, AI e codice. Ogni mattina alle 9, un workflow n8n raccoglie gli articoli più recenti da 8 feed RSS, li filtra e crea una pagina strutturata su Notion. Il frontend React legge i dati tramite Notion API e li presenta in un'interfaccia leggibile via browser.
 
-Currently, two official plugins are available:
+**Live → [infobite-theta.vercel.app](https://infobite-theta.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer | Tecnologia |
+|---|---|
+| Automazione | n8n (self-hosted su VPS Hostinger) |
+| Storage | Notion API |
+| Frontend | React + Vite + Tailwind CSS |
+| Deploy | Vercel + Serverless Functions |
 
-## Expanding the ESLint configuration
+## Come funziona
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **n8n** gira ogni mattina alle 9 — legge 8 feed RSS (CSS-Tricks, OpenAI, DeepMind, HuggingFace, GitHub, freeCodeCamp, Smashing Magazine, Class Central)
+2. Filtra e normalizza gli articoli, costruisce i blocchi Notion
+3. Crea una nuova pagina figlia sotto la pagina madre `InfoBite`
+4. Il frontend chiama `/api/news` (serverless function Vercel) che legge la pagina del giorno da Notion e la restituisce come JSON
+5. React renderizza gli articoli con `MainCard` + `Card` + archivio
+
+## Struttura del progetto
+```
+infobite/
+├── api/
+│   └── news.js          # Serverless function — legge Notion API
+├── src/
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── MainCard.jsx  # Card articolo in evidenza
+│   │   ├── Card.jsx      # Card articolo secondario
+│   │   ├── ArchiveList.jsx
+│   │   └── ArchiveItem.jsx
+│   ├── hooks/
+│   │   └── useNews.js    # Fetch dati + gestione stato
+│   ├── pages/
+│   │   └── Home.jsx
+│   └── App.jsx
+├── public/
+│   └── favicon.svg
+└── .env                  # NOTION_TOKEN + NOTION_PAGE_ID
+```
+
+## Setup locale
+```bash
+npm install
+vercel dev   # avvia frontend + serverless function in locale
+```
+
+Variabili d'ambiente necessarie in `.env`:
+```
+NOTION_TOKEN=secret_...
+NOTION_PAGE_ID=31e58cb7-b6ef-8144-ab81-e4bbe6a2c7ce
+```
+
+## Deploy
+
+Il deploy è automatico ad ogni push su `main` tramite Vercel.
+
+---
+
+Progetto in produzione — non un esercizio.
